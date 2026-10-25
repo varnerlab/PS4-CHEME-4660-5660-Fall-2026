@@ -1,0 +1,7 @@
+# Keep instructor material, release automation, and agent notes out of the student source archives.
+instructor/ export-ignore
+.github/ export-ignore
+AGENTS.md export-ignore
+
+# Keep settings files on LF so their fingerprint does not change on Windows checkouts.
+*.toml text eol=lf

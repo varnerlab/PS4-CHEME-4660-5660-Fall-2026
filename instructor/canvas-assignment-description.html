@@ -1,0 +1,185 @@
+<!--
+INSTRUCTOR-FACING CANVAS COPY
+
+Publish the tagged GitHub release before posting this description.
+Keep the inline styles: they carry the code colors and gray backgrounds into Canvas.
+
+1. Open this file in a web browser; it will render as a page.
+2. Select the rendered page (Command+A on macOS or Ctrl+A on Windows).
+3. Copy it, then paste it into the ordinary Canvas assignment description box.
+4. Preview the Canvas assignment and verify the three links before publishing.
+
+You can also paste this file's contents into the Canvas HTML editor.
+-->
+
+<h2>Problem Set 4: Does Selling Options Pay?</h2>
+
+<p>
+  <strong>Release:</strong> Sunday, October 25, 2026<br>
+  <strong>Initial submission deadline:</strong>
+  Sunday, November 8, 2026, at 11:59 PM ET<br>
+  <strong>Maximum score:</strong> 4 points
+</p>
+
+<p>
+  When you sell an option, you collect a premium today. If it expires in the
+  money, you pay the buyer the difference between the share price and the
+  strike, which can be many times the premium. Buying a second option farther
+  from the share price caps that loss, but costs part of the premium. In PS4
+  you replay 174 historical trades on 29 stocks and funds, each held about a
+  month, with four structures: a short straddle, a short strangle, a
+  protected strangle (which also buys a call), and an iron condor (which also
+  buys a call and a put). You ask whether each made a profit as often as the
+  option prices implied, and whether its return on capital beat cash, SPY,
+  and the stock itself. The Advanced track adds four one-sided structures to
+  show which side made or lost the money. You are graded on correct
+  calculations and interpretation, never on which structure does best.
+</p>
+
+<h3>Download and instructions</h3>
+
+<ul>
+  <li>
+    <a href="https://github.com/varnerlab/PS4-CHEME-4660-5660-Fall-2026/blob/ps4-cheme-4660-5660-2026.1/README.md">
+      Read the complete PS4 instructions
+    </a>
+  </li>
+  <li>
+    <a href="https://github.com/varnerlab/PS4-CHEME-4660-5660-Fall-2026/releases/tag/ps4-cheme-4660-5660-2026.1">
+      Download the PS4 release
+    </a>
+  </li>
+  <li>
+    <a href="https://github.com/varnerlab/PS4-CHEME-4660-5660-Fall-2026/blob/ps4-cheme-4660-5660-2026.1/RUBRIC.md">
+      Read the grading rubric
+    </a>
+  </li>
+</ul>
+
+<p>
+  On the release page, scroll to <strong>Assets</strong> and select
+  <strong>Source code (zip)</strong>. Extract the archive before beginning.
+  Use Julia 1.12.7. The trades and option prices come with the release, so
+  you download no market data.
+</p>
+
+<p>
+  Set <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">TRACK.txt</code> to <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">standard</code> or <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">advanced</code>.
+  Standard completes six functions in <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">src/Standard.jl</code>. Advanced
+  completes the same six in <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">src/Advanced.jl</code> plus four more, one to
+  build each Advanced structure; an Advanced score of 4, confirmed by the
+  teaching team, earns one Magic Point. Answer your track's three
+  questions in <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">responses</code> (Standard.md or Advanced.md). Keep the supplied docstrings and answer
+  markers: the hidden <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">&lt;!-- answer-N:start --&gt;</code> and
+  <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">&lt;!-- answer-N:end --&gt;</code> comments that surround each answer
+  in the response file. Replace only the TODO line between them.
+  Put helper functions in separate files under <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">src</code> and load them
+  from <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">Include.jl</code>.
+</p>
+
+<p>
+  Before you complete any function, write your prediction in Question 1a of
+  your response file: which structure will most often end with a profit and
+  which will earn the highest average return on capital. The starter code is
+  incomplete, so the checks fail until you complete the functions. Edit only TRACK.txt, your track's source and response files,
+  Include.jl, and helper files you add.
+</p>
+
+<h3>Check your work</h3>
+
+<p>
+  In VS Code, open the extracted folder containing <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">Project.toml</code>,
+  <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">README.md</code>, and <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">check_submission.jl</code>.
+  Open a terminal in that folder and run this setup command once:
+</p>
+
+<pre style="display: block; padding: 10px; margin: 0 0 10px; color: #333333; background-color: #f5f5f5; border: 1px solid #cccccc; border-radius: 4px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap;"><code style="color: #333333; background-color: #f5f5f5; padding: 0; font-family: inherit; font-size: inherit;">julia --project=. --startup-file=no -e 'using Pkg; Pkg.instantiate()'</code></pre>
+
+<p>
+  After saving your code, run this command to check it and generate the
+  report:
+</p>
+
+<pre style="display: block; padding: 10px; margin: 0 0 10px; color: #333333; background-color: #f5f5f5; border: 1px solid #cccccc; border-radius: 4px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap;"><code style="color: #333333; background-color: #f5f5f5; padding: 0; font-family: inherit; font-size: inherit;">julia --project=. --startup-file=no check_submission.jl</code></pre>
+
+<p>
+  The checker runs the 24 Standard or 40 Advanced checks that the rubric
+  scores. It then <strong>calls your functions on every trade and writes
+  the report</strong> to results/Report.md; there is no separate report
+  command. Unfinished
+  calculations show <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">UNAVAILABLE</code>,
+  so rerun the command as you complete the functions. Use the report to
+  answer your three questions.
+</p>
+
+<p>
+  Save your answers and run the same command again before submitting.
+  It also reports any supplied docstrings you removed and any unfinished
+  answers, and creates
+  <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">MANIFEST.txt</code>,
+  but it does <strong>not</strong> upload anything to Canvas.
+  If you pass every check, the teaching team reviews your code, docstrings,
+  comments, and answers and awards a 3 or 4. Passing more than half but not
+  all of the checks earns a 2; a 3 or 4 requires passing every check.
+</p>
+
+<h3>Submit to Canvas</h3>
+
+<ol>
+  <li>
+    Zip the entire problem-set folder after running the checker, including
+    your code, answers, data, project files, checker, tests, and generated
+    <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">MANIFEST.txt</code>.
+  </li>
+  <li>
+    Rename the archive to <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">CHEME-5660-PS4-&lt;your netid&gt;.zip</code>.
+  </li>
+  <li>
+    Replace the complete <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">&lt;your netid&gt;</code>
+    placeholder, including the angle brackets, with your actual NetID.
+    For example: <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">CHEME-5660-PS4-abc123.zip</code>.
+  </li>
+  <li>Upload the ZIP file to this Canvas assignment.</li>
+</ol>
+
+<p>
+  <strong>Submit a readable ZIP with attempted work by the initial deadline,
+  even if your work is incomplete or tests fail.</strong>
+  If you cannot run the checker, submit without <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">MANIFEST.txt</code>.
+  A missing, empty, or unreadable submission receives a <strong>Frozen Zero</strong>:
+  it cannot be revised for credit or earn a Magic Point.
+</p>
+
+<h3>Revisions</h3>
+
+<p>
+  After a qualifying initial submission, you may revise until
+  <strong>December 19, 2026 at 11:59 PM ET</strong>, with no limit on attempts.
+  Return to this same Canvas assignment, select <strong>New Attempt</strong>,
+  and upload the revised ZIP file.
+</p>
+
+<p>
+  Canvas may label these revisions “late,” but they have no late penalty. We keep your highest score, including across tracks.
+  To change tracks, update <code style="color: #c7254e; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 90%;">TRACK.txt</code>,
+  complete that track's files, and rerun the checker.
+  An Advanced score of 4 confirmed by the teaching team, on the first
+  submission or a revision,
+  earns <strong>one Magic Point</strong>, at most one for PS4.
+</p>
+
+<h3>Collaboration and academic integrity</h3>
+
+<p>
+  Submit your own work. You may discuss ideas with classmates and use course
+  materials, books, documentation, internet resources, and AI tools.
+  Do not share code or solutions. You are responsible for understanding and
+  explaining everything you submit.
+</p>
+
+<p>
+  The reference solution will be released after the initial deadline.
+  Use it to understand errors and debug your own work, but do not copy it.
+  Copying it results in a score of 0 for PS4 that revisions cannot change.
+  These rules also apply to revisions.
+</p>

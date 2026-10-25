@@ -1,0 +1,47 @@
+name: Release PS4 student assignment
+
+on:
+  push:
+    tags:
+      - 'ps4-cheme-4660-5660-2026.*'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1.12.7'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check release tag
+        shell: bash
+        run: |
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^ps4-cheme-4660-5660-2026\.[0-9]+$ ]]; then
+            echo "Invalid PS4 release tag: ${GITHUB_REF_NAME}" >&2
+            exit 1
+          fi
+
+      - name: Build and test the student source archive
+        run: python3 instructor/validate_release.py --tag "${GITHUB_REF_NAME}"
+
+      - name: Create draft GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --draft \
+            --verify-tag \
+            --title "PS4: Does Selling Options Pay?" \
+            --notes-file instructor/release-notes.md

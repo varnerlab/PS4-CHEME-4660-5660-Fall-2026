@@ -1,0 +1,60 @@
+# Graded settings: do not edit; copy changes into explore.toml.
+# Every graded run reads this file. Each setting has a short note above it.
+
+# Annual interest rate (0.04 means 4 percent per year). The two models with r in their report
+# label grow the share price at this rate, and the risk-free benchmark is what cash earns at
+# this rate over the same days as each trade.
+# Source: the mean investment rate of the 13-week Treasury bills auctioned from 2026-04-13 to 2026-08-24 (20 auctions).
+risk_free_rate = 0.0376
+
+# Price used when we trade an option: "mid" fills at the midpoint of the bid and ask,
+# "bidask" fills at the less favorable side (sell at the bid, buy at the ask).
+fill = "mid"
+
+# Starting cushion for a short option without protection, as a fraction of the share price.
+# The README section "Return on capital" gives the full broker rule.
+margin_rate = 0.20
+
+# Smallest cushion allowed, even for options far from the current price: a fraction of the
+# share price for a call and of the strike for a put.
+margin_floor = 0.10
+
+# How many simulated price paths to draw for each trade and each model.
+number_of_paths = 10000
+
+# Seed for the random number generator, so every run gives the same paths.
+seed = 5660
+
+# Target delta of the short option (how far it sits from the current price).
+short_delta = 0.25
+
+# Target delta of the long protective option (the wing). It must be smaller than short_delta.
+wing_delta = 0.10
+
+# Days until expiration that we aim for when we pick a contract.
+target_dte = 30
+
+# How many days away from target_dte we still accept when picking a contract.
+dte_window = 5
+
+# A chosen option is treated as erratic when its bid-ask spread is wider than this many
+# times the median spread of the strikes near it.
+quote_screen_multiple = 3.0
+
+# A quote narrower than this is never treated as erratic (bid-ask spread in USD/share).
+quote_screen_min_width = 0.25
+
+# Number of daily price changes before the entry date used to estimate drift and volatility.
+history_window = 252
+
+# Stocks and funds to backtest. Each must be in the course options archive and have course
+# price history, which IWM and META do not.
+tickers = ["AAPL", "ABBV", "AMD", "AMGN", "AVGO", "BAC", "BMY", "CVX", "GOOG", "GS",
+           "INTC", "JNJ", "JPM", "LLY", "MRNA", "MSFT", "MU", "NVDA", "OXY", "PFE",
+           "QCOM", "QQQ", "SPY", "TGT", "UNH", "UPS", "WFC", "WMT", "XOM"]
+
+# Market benchmark for the report: what the same money would have earned by buying this fund
+# or stock at the close on each trade's entry date and selling it at the close on the
+# expiration date. It must be in the course options archive. SPY is a fund that follows the
+# S&P 500 index of large US companies.
+benchmark_ticker = "SPY"

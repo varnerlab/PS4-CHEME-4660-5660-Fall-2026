@@ -1,0 +1,19 @@
+.superpowers/
+docs/build/
+__pycache__/
+.DS_Store
+
+# Generated checker and release artifacts
+results/
+MANIFEST.txt
+dist/
+instructor/output/
+instructor/validation/*.log
+
+# Keep reference solutions and numerical answers out of the public repository.
+# Only the release tools, release notes, and Canvas copy are tracked.
+instructor/*
+!instructor/build_release.py
+!instructor/validate_release.py
+!instructor/release-notes.md
+!instructor/canvas-assignment-description.html
