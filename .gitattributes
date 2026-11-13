@@ -1,5 +1,6 @@
-# Keep instructor material, release automation, and agent notes out of the student source archives.
+# Keep instructor material, the reference solution, release automation, and agent notes out of the student source archives.
 instructor/ export-ignore
+solution/ export-ignore
 .github/ export-ignore
 AGENTS.md export-ignore
 

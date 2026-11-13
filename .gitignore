@@ -10,10 +10,13 @@ dist/
 instructor/output/
 instructor/validation/*.log
 
-# Keep reference solutions and numerical answers out of the public repository.
+# Keep instructor validation files out of the public repository.
 # Only the release tools, release notes, and Canvas copy are tracked.
+# The reference solution is tracked under solution/ for the solution release.
 instructor/*
 !instructor/build_release.py
 !instructor/validate_release.py
 !instructor/release-notes.md
 !instructor/canvas-assignment-description.html
+!instructor/build_solution_release.py
+!instructor/solution-release-notes.md

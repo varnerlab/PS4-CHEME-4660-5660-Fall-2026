@@ -1,0 +1,71 @@
+name: Solution release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'solution/**'
+      - '.github/workflows/solution-release.yml'
+      - 'instructor/build_solution_release.py'
+      - 'instructor/solution-release-notes.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write # create the release and attach the tested ZIP
+
+concurrency:
+  group: solution-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    env:
+      # This tag must not match the student release trigger, ps4-cheme-4660-5660-2026.* -
+      RELEASE_TAG: ps4-cheme-4660-5660-2026-solution.1
+      ARCHIVE: dist/solution-release/CHEME-5660-PS4-Solution-2026.1.zip
+
+    steps:
+      - name: Check out the selected commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Require a new solution release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if [[ -n "$(git ls-remote --tags origin "refs/tags/$RELEASE_TAG")" ]] ||
+             gh release list --limit 100 --json tagName --jq '.[].tagName' | grep -qx "$RELEASE_TAG"; then
+            echo "A release or draft for $RELEASE_TAG already exists. Delete the draft before rebuilding." >&2
+            exit 1
+          fi
+
+      - name: Install the course Julia version
+        uses: julia-actions/setup-julia@fa02766e078afaaf09b14210362cee14137e6a32 # v3.0.2
+        with:
+          version: '1.12.7'
+
+      - name: Build the ZIP and test its extracted contents
+        run: python3 instructor/build_solution_release.py
+
+      - name: Create a draft release with the tested ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          # Keep the student assignment release as the repository's latest release -
+          gh release create "$RELEASE_TAG" "$ARCHIVE" "$ARCHIVE.sha256" \
+            --target "$GITHUB_SHA" \
+            --title "PS4 Reference Solution — Standard and Advanced (2026.1)" \
+            --notes-file instructor/solution-release-notes.md \
+            --draft \
+            --latest=false
+          release_url=$(gh release view "$RELEASE_TAG" --json url --jq .url)
+          printf 'Solution ZIP tested successfully. SHA256: `%s`\n\n[Review and publish the draft release](%s).\n' \
+            "$(cut -d' ' -f1 "$ARCHIVE.sha256")" "$release_url" >> "$GITHUB_STEP_SUMMARY"
